@@ -64,6 +64,7 @@
 
             var el = document.getElementById("editormd");
             el.addEventListener("paste", function(event){
+                testEditor.executePlugin('imageDialog', 'image-dialog/image-dialog');
                 var items = event.clipboardData.items;
                 if(event.clipboardData.types.indexOf('text/plain') > -1){
                     console.log(event.clipboardData.getData('text/html'));
@@ -72,11 +73,17 @@
                 console.log(JSON.stringify(items)); // will give you the mime types
                 var blob = items[0].getAsFile();
                 var reader = new FileReader();
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://xxxxxxxx:5000/upload', true);
                 reader.onload = function(event)
                 {
-                    console.log(event.target.result)
+                    console.log(event.target.result);
                 }; // data url
                 reader.readAsDataURL(blob);
+                var formData = new FormData();
+                var imageName = new Date().getTime().toString() + '.png';
+                formData.append('image', blob, imageName);
+                xhr.send(formData);
             });
         </script>
     </body>
