@@ -49,7 +49,8 @@
                 var dialogContent = ( (settings.imageUpload) ? "<form action=\"" + action +"\" target=\"" + iframeName + "\" method=\"post\" enctype=\"multipart/form-data\" class=\"" + classPrefix + "form\">" : "<div class=\"" + classPrefix + "form\">" ) +
                                         ( (settings.imageUpload) ? "<iframe name=\"" + iframeName + "\" id=\"" + iframeName + "\" guid=\"" + guid + "\"></iframe>" : "" ) +
                                         "<label>" + imageLang.url + "</label>" +
-                                        "<input type=\"text\" data-url />" + (function(){
+                                        "<label data-url>" + settings.imageUploadURL + "</label>" + (function(){
+                                        //"<input type=\"text\" data-url />" + (function(){
                                             return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" +
                                                                                 "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
                                                                                 "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
@@ -59,8 +60,8 @@
                                         "<label>" + imageLang.alt + "</label>" +
                                         "<input type=\"text\" value=\"" + selection + "\" data-alt />" +
                                         "<br/>" +
-                                        "<label>" + imageLang.link + "</label>" +
-                                        "<input type=\"text\" value=\"http://\" data-link />" +
+                                        //"<label>" + imageLang.link + "</label>" +
+                                        "<input style=\"display: none\" type=\"text\" value=\"http://\" data-link />" +
                                         "<br/>" +
                                     ( (settings.imageUpload) ? "</form>" : "</div>");
 
@@ -68,7 +69,7 @@
 
                 dialog = this.createDialog({
                     title      : imageLang.title,
-                    width      : (settings.imageUpload) ? 465 : 380,
+                    width      : (settings.imageUploadURL) ? 465 : 380,
                     height     : 254,
                     name       : dialogName,
                     content    : dialogContent,
@@ -81,7 +82,9 @@
                     },
                     buttons : {
                         enter : [lang.buttons.enter, function() {
-                            var url  = this.find("[data-url]").val();
+                            //var url  = this.find("[data-url]").val();
+                            this.find("[data-url]").val(settings.imageUploadURL);
+                            var url = settings.imageUploadURL;
                             var alt  = this.find("[data-alt]").val();
                             var link = this.find("[data-link]").val();
 

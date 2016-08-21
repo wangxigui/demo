@@ -1294,6 +1294,7 @@
          */
         
         createDialog : function(options) {            
+            console.log('settings', settings);
             return $.proxy(editormd.createDialog, this)(options);
         },
         
